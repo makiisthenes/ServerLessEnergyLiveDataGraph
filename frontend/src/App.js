@@ -16,11 +16,13 @@ function App() {
     }));
   };
 
-  // useEffect hook to start fetching data automatically
+  // useEffect hook to start fetching data automatically and instantly when the component is mounted
   useEffect(() => {
+    fetchData(); // Fetch data instantly on component mount
+    
     const intervalId = setInterval(() => {
       fetchData();
-    }, 10000);  // after 15 seconds.
+    }, 10000);  // Continue fetching every 10 seconds.
 
     // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
@@ -28,7 +30,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Interconnector Serverless Sample Workshop</h1>
+      <h1>Interconnector Serverless Electricity Flow Graph</h1>
       <p>By Michael Peres</p>
       <div className={"btns-wrapper"}>
         {state.loading && <p>Updating...</p>}
@@ -43,4 +45,3 @@ function App() {
 }
 
 export default App;
-
