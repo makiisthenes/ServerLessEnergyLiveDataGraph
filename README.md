@@ -333,6 +333,9 @@ Is shown below,
 
 I have stopped the services from running for the sake of not causing any account balance issues.
 
+When considering updating the code frequently, make sure to clear cache of CloudFront, such that the updates are shown, the command for this would be:
+
+`aws cloudfront create-invalidation --distribution-id E3G4RNRQVISTEW --paths "/*"`
 
 
 End of Notes ~ Michael Peres
