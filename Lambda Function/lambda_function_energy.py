@@ -3,6 +3,12 @@ from entsoe import EntsoePandasClient
 import datetime
 import boto3
 import json
+import traceback
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.ERROR)
+logger = logging.getLogger()
 
 uk_country_code = "UK"  #
 country_code_non_uk_dict = {
@@ -12,15 +18,15 @@ country_code_non_uk_dict = {
     "Norway": "NO",
 }
 
-ssm_client = boto3.client("ssm")
+ssm_client = boto3.client("ssm", region_name="eu-north-1")  # region specific to service manage SSM region.
 api_key = ssm_client.get_parameter(Name="entsoe-api-token", WithDecryption=False)
 
 # Defining client
 client = EntsoePandasClient(api_key=api_key["Parameter"]["Value"])
 
 # Dynamo db client
-boto_client = boto3.resource("dynamodb")
-dynamo_db_table = boto_client.Table("interconnector-data")
+boto_client = boto3.resource("dynamodb", region_name="eu-north-1")
+dynamo_db_table = boto_client.Table("electric_data")
 
 
 def get_date_range():
@@ -147,5 +153,14 @@ def lambda_handler(event, context):
         interconnector_dict = convert_df_to_json(interconnector_df)
         update_dynamo_db(interconnector_dict)
         return {"statusCode": 200, "body": json.dumps("Everything works!")}
-    except:
+    except Exception as e:
+        error_info = {
+            "errorMessage": str(e),
+            "errorType": type(e).__name__,
+            "requestId": context.aws_request_id,
+            "stackTrace": traceback.format_exc().splitlines()
+        }
+        
+        # Log the constructed error information
+        logger.error(json.dumps(error_info))
         raise Exception
