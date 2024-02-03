@@ -4,7 +4,10 @@ Use of AWS CloudFront, API Gateway, S3 Bucket, Lambda, DynamoDB, EventBridge and
 
 **The Architecture of Serverless Energy Outflow Diagram:**
 
-![image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/bbe3d006-bdd3-45e2-8545-0947d7faf468)
+<img title="" src="https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/bbe3d006-bdd3-45e2-8545-0947d7faf468" data-align="center" />
+
+![image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/af26d7c8-55ab-4615-9468-fe94df085998)
+
 
 This architecture shows, Lamda calling an API service through the use of Amazon EventBridge (invokes every minute), AWS Parameter Score for the API key. When the API is called, the result is stored in a Amazon DynamoDB.
 
@@ -78,7 +81,8 @@ Lambdas are cloud functions that can run functions and interact with different s
 
 We need to give a Role to Lambda function such that they can access these resources via IAM. 
 
-![](C:\Users\Michael\AppData\Roaming\marktext\images\2024-02-03-19-28-28-image.png)
+![2024-02-03-19-28-28-image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/0e6d77ec-37a1-4d86-8950-41225c835c92)
+
 
 Our Lambda needs to access 2 things, which is DynamoDB and SSM. This is the database, and SSM is Systems Manager, however we need it to access SSM credentials.
 
@@ -165,13 +169,14 @@ if there’s a non-standard package, you need to zip it up and include it with t
 
 If not we could just copy and paste into the code source, each code block should contain, `lambda_handler()`
 
-![](C:\Users\Michael\AppData\Roaming\marktext\images\2024-02-03-20-25-14-image.png)
+![2024-02-03-20-25-14-image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/6df52f1c-12da-421c-b4e5-e0d231ffeaea)
+
 
 
 
 This lambda function is called `lambda_db_push` and will be used, now that we have this we need to make sure that it can be called, we need to provide a zip with the python function as well as the packages that are not standard. 
 
-<img title="" src="file:///C:/Users/Michael/AppData/Roaming/marktext/images/2024-02-03-20-29-57-image.png" alt="" width="214" data-align="center">
+<img title="" src="https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/70782fd5-097a-4b23-b4e5-a19ae5624cee" alt="" width="214" data-align="center">
 
 The zip should look like the following, where the lambda function is shown below, and all these folders contain the libraries, that it uses.
 
@@ -189,9 +194,11 @@ I changed memory size to be 200 MB and timeout to 30 seconds. This means the
 
 Running this, should give us a success response, with a new entry in the database.
 
-![](C:\Users\Michael\AppData\Roaming\marktext\images\2024-02-03-21-45-04-image.png)
+![2024-02-03-21-45-04-image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/d96036bd-fbb2-4099-93b2-444ee457094b)
 
-![](C:\Users\Michael\AppData\Roaming\marktext\images\2024-02-03-21-46-10-image.png)
+
+![2024-02-03-21-46-10-image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/783ddaf4-ef30-4ae9-ac21-9c9e4145767d)
+
 
 These can be seen in the DynamoDB UI, which shows the list of query items.
 
@@ -215,7 +222,8 @@ We start by making an EventBridge Rule (now Schedule can be made straight away),
 
 This sets the name `db-push-scheduler`
 
-![](C:\Users\Michael\AppData\Roaming\marktext\images\2024-02-03-22-03-43-image.png)
+![2024-02-03-22-03-43-image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/7adc124f-1eb2-4805-a4b0-9726d89a3080)
+
 
 Running every 15 minutes.
 
@@ -243,7 +251,8 @@ Lambda function will have name `api-lambda-db-read` and also be with Python 3.9
 
 We will then apply the code through the code source,
 
-![](C:\Users\Michael\AppData\Roaming\marktext\images\2024-02-03-22-19-20-image.png)
+![2024-02-03-22-19-20-image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/59090f26-fe9e-4e95-83e6-3da5850b0e35)
+
 
 And deploy these, we can then test this and see how much resources this takes. 
 
@@ -275,7 +284,8 @@ We can enable CORS on this through the resource button, but also this help page 
 
 https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors-console.html
 
-<img title="" src="file:///C:/Users/Michael/AppData/Roaming/marktext/images/2024-02-03-22-36-53-image.png" alt="" width="387" data-align="center">
+
+<img title="" src="https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/9a496386-714b-493d-94d0-46e19194e419" alt="" width="387" data-align="center">
 
 ----
 
@@ -283,7 +293,8 @@ We then deploy the API, and call it production.
 
 We will be able to obtain the invoke url, through the use of Stages section, which will give you the URL, 
 
-![](C:\Users\Michael\AppData\Roaming\marktext\images\2024-02-03-22-40-34-image.png)
+![2024-02-03-22-40-34-image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/08e95be9-6659-4f52-b88e-02144cfcd6cb)
+
 
 ----
 
@@ -301,11 +312,12 @@ The code will need to be rebuilt, to contain the updated URL, this can be update
 
 We put the contents of the build folder into the S3, by uploading it as a object.
 
-![](C:\Users\Michael\AppData\Roaming\marktext\images\2024-02-03-23-07-50-image.png)
+![2024-02-03-23-07-50-image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/066e2721-b02e-4803-800b-c4733473ac87)
+
 
 Now we have access to these files within our directory, 
 
-![](C:\Users\Michael\AppData\Roaming\marktext\images\2024-02-03-23-08-42-image.png)
+![2024-02-03-23-08-42-image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/c171ec7d-405d-4a56-8e85-bdc62f5826be)
 
 We go onto CloudFront, the front to the internet from the S3 bucket connection we made earlier. 
 
