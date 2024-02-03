@@ -6,7 +6,7 @@ Use of AWS CloudFront, API Gateway, S3 Bucket, Lambda, DynamoDB, EventBridge and
 
 <img title="" src="https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/bbe3d006-bdd3-45e2-8545-0947d7faf468" data-align="center" />
 
-![image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/af26d7c8-55ab-4615-9468-fe94df085998)
+![image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/c6f56811-707a-4252-943e-4685cf97bb9d)
 
 
 This architecture shows, Lamda calling an API service through the use of Amazon EventBridge (invokes every minute), AWS Parameter Score for the API key. When the API is called, the result is stored in a Amazon DynamoDB.
