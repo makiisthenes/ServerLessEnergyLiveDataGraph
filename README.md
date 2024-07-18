@@ -3,6 +3,8 @@
 Interconnector electricity flow in Europe refers to the transfer of electrical power across borders between European countries through high-voltage power lines known as interconnectors. These interconnectors are essential components of the European electricity grid, enabling the exchange of electricity to balance supply and demand across different regions, enhance security of supply, and integrate renewable energy sources. This project achieve a serverless solution of reviewing current electricity flow between countries, France, Belgium, Netherlands and Normay.
 ![image](https://github.com/makiisthenes/ServerLessEnergyLiveDataGraph/assets/52138450/f0a8a52a-476a-4ebe-807f-ebac17521bdc)
 
+https://www.nationalgrid.com/stories/energy-explained/what-are-electricity-interconnectors
+https://bmrs.elexon.co.uk/interconnector-flows
 
 Use of AWS CloudFront, API Gateway, S3 Bucket, Lambda, DynamoDB, EventBridge and APIs to power a live energy graph showing live prices from within the energy market, which runs completely on the cloud (End to End). Guidance provided by EDF energy company.
 
